@@ -1,0 +1,107 @@
+{
+  "type": "line",
+  "data": {
+    "datasets": [{
+      "label": "gewollte Temperatur",
+      "yAxisID": "T",
+      "data": "[]",
+      "backgroundColor": ["rgba(255, 99, 132, 0.2)"],
+      "borderColor": ["rgba(255, 99, 132, 1)"],
+      "borderWidth": 2,
+      "pointRadius": 5,
+      "fill": false
+    },
+      {
+        "label": "gemessene Temperatur",
+        "yAxisID": "T",
+        "data": "[]",
+        "backgroundColor": ["rgba(255, 99, 13, 0.2)"],
+        "borderColor": ["rgba(255, 99, 13, 1)"],
+        "borderWidth": 2,
+        "pointRadius": 1,
+        "fill": false
+      },{
+        "label": "Fenster 1",
+        "yAxisID": "L",
+        "data": "[]",
+        "backgroundColor": ["rgba(22, 250, 132, 0.2)"],
+        "borderColor": ["rgba(22, 150, 132, 1)"],
+        "borderWidth": 3,
+        "pointRadius": 1,
+        "fill": false,
+        "steppedLine": true
+      },
+      {
+        "label": "Fenster 2",
+        "yAxisID": "L",
+        "data": "[]",
+        "backgroundColor": ["rgba(22, 250, 132, 0.2)"],
+        "borderColor": ["rgba(22, 250, 132, 1)"],
+        "borderWidth": 3,
+        "pointRadius": 1,
+        "fill": false,
+        "steppedLine": true
+      },
+      {
+        "label": "Heizungsventil",
+        "yAxisID": "A",
+        "data": "[]",
+        "backgroundColor": ["rgba(22, 25, 132, 0.2)"],
+        "borderColor": ["rgba(22, 25, 132, 1)"],
+        "borderWidth": 3,
+        "pointRadius": 1,
+        "fill": false
+      }]
+  },
+  "options": {
+    "responsive": false,
+    "scales": {
+      "yAxes": [{
+        "id": "T",
+        "scaleLabel": {
+          "display": true,
+          "labelString": "°C"
+        },
+        "ticks": {
+          "beginAtZero": false,
+          "suggestedMin": 15,
+          "suggestedMax": 25
+        }
+      },
+        {
+          "id": "L",
+          "position": "right",
+          "scaleLabel": {
+            "display": true,
+            "labelString": "on/off"
+          },
+          "ticks": {
+            "beginAtZero": false,
+            "suggestedMin": 0,
+            "suggestedMax": 1
+          }
+        }, {
+          "id": "A",
+          "position": "right",
+          "scaleLabel": {
+            "display": true,
+            "labelString": "%"
+          },
+          "ticks": {
+            "beginAtZero": false,
+            "suggestedMin": 40,
+            "suggestedMax": 80
+          }
+        }],
+      "xAxes": [{
+        "type": "time",
+        "time": {
+          "unit": "hour"
+        },
+        "ticks": {
+          "maxTicksLimit": 10
+        }
+      }]
+    }
+  }
+}
