@@ -60,34 +60,41 @@ ablegen
    * ![Beispiel](https://github.com/MarcProe/Chart.fhem.js/raw/master/.assets/Beispiel.png)
 
 9. Man kann den Chart auch ohne die `createChart`-Methode erstellen, wenn man weitere Einstellungsmöglichkeiten haben möchte:
-```javascript
-async function myChart() {
-    const chartJSON = await loadChartFromUrl("/fhem/chart.js/HeizungDefault.json").catch(err => {console.log(err)});
-
-    //set start and end time for axis
-    chartJSON.options.scales.xAxes[0].ticks.min = moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format();
-    chartJSON.options.scales.xAxes[0].ticks.max = moment(getChartTime(), "YYYY-MM-DD HH:mm:ss").format();
-
-    //set data and labels
-    chartJSON.data.datasets[0].data = await loadData("logrep", { "d": "FensterBad", "r": "temperature" },
-        getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-    chartJSON.data.datasets[0].label = "Temp Fenster";
-
-    chartJSON.data.datasets[1].data = await loadData("logrep", { "d": "TempBad", "r": "temperature" },
-        getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-    chartJSON.data.datasets[1].label = "Temp Sensor";
-
-    chartJSON.data.datasets[2].data = await loadData("logrep", { "d": "FensterBad", "r": "state", "f": d => { return d === "closed"?0:1; } } ,
-        getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-
-    chartJSON.data.datasets[3].data = await loadData("logrep", { "d": "HumiBad", "r": "humidity" },
-        getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-    chartJSON.data.datasets[3].label = "Luftfeuchtigkeit";
+    ```javascript
+    async function myChart() {
+        const chartJSON = await loadChartFromUrl("/fhem/chart.js/HeizungDefault.json").catch(err => {console.log(err)});
+    
+        //set start and end time for axis
+        chartJSON.options.scales.xAxes[0].ticks.min = moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format();
+        chartJSON.options.scales.xAxes[0].ticks.max = moment(getChartTime(), "YYYY-MM-DD HH:mm:ss").format();
+    
+        //set data and labels
+        chartJSON.data.datasets[0].data = await loadData("logrep", { "d": "FensterBad", "r": "temperature" },
+            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        chartJSON.data.datasets[0].label = "Temp Fenster";
+    
+        chartJSON.data.datasets[1].data = await loadData("logrep", { "d": "TempBad", "r": "temperature" },
+            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        chartJSON.data.datasets[1].label = "Temp Sensor";
+    
+        chartJSON.data.datasets[2].data = await loadData("logrep", { "d": "FensterBad", "r": "state", "f": d => { return d === "closed"?0:1; } } ,
+            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+    
+        chartJSON.data.datasets[3].data = await loadData("logrep", { "d": "HumiBad", "r": "humidity" },
+            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        chartJSON.data.datasets[3].label = "Luftfeuchtigkeit";
 
     const ctx = document.getElementById("HeizungBad").getContext('2d');
     return new Chart(ctx, chartJSON);
-}
+    }
 
-myChart();
-```
-r
+    myChart();
+    ```
+
+10. Mit Javascript können auch Steuerknöpfe erzeugt werden:
+    ```html
+    <canvas id="Heizung" width="800" height="300"></canvas>
+    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], -1, 'days')"><--</button>
+    <button type="button" onClick="gotoTime(fhemChartjs['Heizung'], getChartTime(0,25), getChartTime())">Jetzt</button>
+    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], 1, 'days');">--></button>
+    ```
