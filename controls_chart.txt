@@ -1,7 +1,7 @@
 DIR www/chart.js
-UPD 2019-11-17_21:07:19 4611    www/chart.js/Chart.fhem.js
-UPD 2019-11-17_21:07:19 172817  www/chart.js/Chart.min.js
-UPD 2019-11-17_21:07:19 2336    www/chart.js/HeizungDefault.json
-UPD 2019-11-17_21:07:19 2559    www/chart.js/HeizungZweiFenster.json
-UPD 2019-11-17_21:07:19 336451  www/chart.js/moment-with-locales.min.js
-UPD 2019-11-17_21:07:19 521     www/pgm2/Chart.min.css
+UPD 2019-11-17_22:40:32 5769    www/chart.js/Chart.fhem.js
+UPD 2019-11-17_21:24:35 172817  www/chart.js/Chart.min.js
+UPD 2019-11-17_21:24:35 2336    www/chart.js/HeizungDefault.json
+UPD 2019-11-17_21:24:35 2666    www/chart.js/HeizungZweiFenster.json
+UPD 2019-11-17_21:24:35 336451  www/chart.js/moment-with-locales.min.js
+UPD 2019-11-17_21:24:35 521     www/pgm2/Chart.min.css

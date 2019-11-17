@@ -25,7 +25,10 @@ async function createChart(logrep, from, to, canvas, specs, chartUrl, callback) 
         console.log(err)
     });
     const ctx = document.getElementById(canvas).getContext('2d');
-    new Chart(ctx, chartJSON);
+
+    if (!window.fhemChartjs) window.fhemChartjs = {};
+
+    window.fhemChartjs[canvas] = new Chart(ctx, chartJSON);
 }
 
 function setTimePeriod(options, from, to, index) {
@@ -76,8 +79,8 @@ function loadData(logrep, spec, from, to) {
     return new Promise(function (resolve, reject) {
         const sql = "SELECT DISTINCT timestamp, max(value) as value FROM history WHERE device = '" + spec.d + "' AND reading = '" + spec.r + "' AND timestamp between '" + from + "' AND '" + to + "' GROUP BY timestamp ORDER BY timestamp;";
         const cmd = encodeURI("get " + logrep + " dbValue " + sql);
-        const csrf = getCSRF() ? ("&fwcsrf=" + getCSRF()) : "";
-
+        const csrws = getCSRF();
+        const csrf = csrws ? ("&fwcsrf=" + csrws) : "";
 
         fetch('/fhem?cmd=' + cmd + csrf, {"redirect": "error"}).then(response => {
             return response.text();
@@ -139,4 +142,30 @@ function getChartTime(M, H, d, m, y) {
 
 function getCSRF() {
     return document.body.getAttribute("fwcsrf");
+}
+
+async function adjustTime(chart, time, tname, idx) {
+    if (!idx) idx = 0;
+    const from = moment(chart.options.scales.xAxes[idx].ticks.min).add(time, tname);
+    const to = moment(chart.options.scales.xAxes[idx].ticks.max).add(time, tname);
+
+    chart.options.scales.xAxes[idx].ticks.min = from.format();
+    chart.options.scales.xAxes[idx].ticks.max = to.format();
+
+    await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
+
+    chart.update();
+}
+
+async function gotoTime(chart, f, t, idx) {
+    if (!idx) idx = 0;
+    const from = moment(f, "YYYY-MM-DD HH:mm:ss");
+    const to = moment(t, "YYYY-MM-DD HH:mm:ss");
+
+    chart.options.scales.xAxes[idx].ticks.min = from.format();
+    chart.options.scales.xAxes[idx].ticks.max = to.format();
+
+    await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
+
+    chart.update();
 }
