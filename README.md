@@ -59,36 +59,72 @@ ablegen
 8. Fertig!
    * ![Beispiel](https://github.com/MarcProe/Chart.fhem.js/raw/master/.assets/Beispiel.png)
 
-9. Man kann den Chart auch ohne die `createChart`-Methode erstellen, wenn man weitere Einstellungsmöglichkeiten haben möchte:
-    ```javascript
-    async function myChart() {
-        const chartJSON = await loadChartFromUrl("/fhem/chart.js/HeizungDefault.json").catch(err => {console.log(err)});
-    
-        //set start and end time for axis
-        chartJSON.options.scales.xAxes[0].ticks.min = moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format();
-        chartJSON.options.scales.xAxes[0].ticks.max = moment(getChartTime(), "YYYY-MM-DD HH:mm:ss").format();
-    
-        //set data and labels
-        chartJSON.data.datasets[0].data = await loadData("logrep", { "d": "FensterBad", "r": "temperature" },
-            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-        chartJSON.data.datasets[0].label = "Temp Fenster";
-    
-        chartJSON.data.datasets[1].data = await loadData("logrep", { "d": "TempBad", "r": "temperature" },
-            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-        chartJSON.data.datasets[1].label = "Temp Sensor";
-    
-        chartJSON.data.datasets[2].data = await loadData("logrep", { "d": "FensterBad", "r": "state", "f": d => { return d === "closed"?0:1; } } ,
-            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-    
-        chartJSON.data.datasets[3].data = await loadData("logrep", { "d": "HumiBad", "r": "humidity" },
-            getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
-        chartJSON.data.datasets[3].label = "Luftfeuchtigkeit";
+9. Man kann den Chart auch ohne die `createChart`-Methode oder JSON-Template erstellen, wenn man weitere Einstellungsmöglichkeiten haben möchte:
+    ```html
+    htmlCode <div><a href="/fhem?detail=chart_TEST">TEST</a>
+        <canvas id="TEST" width="1400" height="500"></canvas>
+    </div>
+    <script>
 
-    const ctx = document.getElementById("HeizungBad").getContext('2d');
-    return new Chart(ctx, chartJSON);
+    async function myChart() {
+
+        var data0 = await loadData("logrep", { "d": "feinstaub", "r": "temperature" }, getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        var data1 = await loadData("logrep", { "d": "weather_current", "r": "tempc" },  getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        var data2 = await loadData("logrep", { "d": "TempStall", "r": "huette" }, getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        var data3 = await loadData("logrep", { "d": "TempStall", "r": "aussen" }, getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+        var data4 = await loadData("logrep", { "d": "TempStall", "r": "stall" }, getChartTime(0,25), getChartTime()).catch(err => {console.log(err)});
+    
+        var myHandychart = {
+          "type": "line",
+          "data": {
+            "datasets": [{
+              "label": "Temp Feinstaub",
+              "data": data0,
+              "yAxisID": "T", "backgroundColor": ["rgba(255, 0, 0, 0.2)"], "borderColor": ["rgba(255, 16, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+            },{
+                "label": "Temp OWM",
+                "data": data1,
+              "yAxisID": "T", "backgroundColor": ["rgba(0, 255, 0, 0.2)"], "borderColor": ["rgba(16, 255, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              },{
+                "label": "Temp Hütte",
+                "data": data2,
+              "yAxisID": "T", "backgroundColor": ["rgba(0, 0, 255, 0.2)"], "borderColor": ["rgba(16, 16, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              },
+              {
+                "label": "Temp Außen",
+                "data": data3,
+                "yAxisID": "T", "backgroundColor": ["rgba(255, 255, 0, 0.2)"], "borderColor": ["rgba(255, 255, 16, 200)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              },
+              {
+                "label": "Temp Stall",
+                "data": data4,
+                "yAxisID": "T", "backgroundColor": ["rgba(0, 255, 255, 0.2)"], "borderColor": ["rgba(16, 255, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false,
+              }]
+          },
+          "options": {
+            "responsive": false,
+            "scales": {
+              "yAxes": [{
+                "id": "T", "scaleLabel": { "display": true, "labelString": "°C" }, "ticks": { "beginAtZero": false, "suggestedMin": 15, "suggestedMax": 25 }
+              }],
+              "xAxes": [{ "type": "time", "time": { "unit": "hour" }, 
+                "ticks": { 
+                  "maxTicksLimit": 10,
+                  "min": moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format(),
+                  "max": moment(getChartTime(), "YYYY-MM-DD HH:mm:ss").format()
+                } 
+              }]
+            }
+          }
+        };
+   
+        const ctx = document.getElementById("TEST").getContext('2d');
+        return new Chart(ctx, myHandychart);       
     }
 
     myChart();
+
+    </script>
     ```
 
 10. Mit Javascript können auch Steuerknöpfe erzeugt werden:
