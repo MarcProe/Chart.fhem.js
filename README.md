@@ -130,7 +130,7 @@ ablegen
 10. Mit Javascript können auch Steuerknöpfe erzeugt werden:
     ```html
     <canvas id="Heizung" width="800" height="300"></canvas>
-    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], -1, 'days')"><--</button>
+    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], -1, 'days')">&larr;</button>
     <button type="button" onClick="gotoTime(fhemChartjs['Heizung'], getChartTime(0,25), getChartTime())">Jetzt</button>
-    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], 1, 'days');">--></button>
+    <button type="button" onClick="adjustTime(fhemChartjs['Heizung'], 1, 'days');">&rarr;</button>
     ```
