@@ -1,5 +1,5 @@
 DIR www/chart.js
-UPD 2019-11-17_22:40:32 5769    www/chart.js/Chart.fhem.js
+UPD 2022-09-13_00:00:00 5599     www/chart.js/Chart.fhem.js
 UPD 2019-11-17_21:24:35 172817  www/chart.js/Chart.min.js
 UPD 2019-11-17_21:24:35 2336    www/chart.js/HeizungDefault.json
 UPD 2019-11-17_21:24:35 2666    www/chart.js/HeizungZweiFenster.json
