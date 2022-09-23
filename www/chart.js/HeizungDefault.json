@@ -46,7 +46,7 @@
   "options": {
     "responsive": false,
     "scales": {
-      "yAxes": [{
+      "yAxis": [{
         "id": "T",
         "scaleLabel": {
           "display": true,
@@ -83,7 +83,7 @@
             "suggestedMax": 80
           }
         }],
-      "xAxes": [{
+      "xAxis": [{
         "type": "time",
         "time": {
           "unit": "hour"

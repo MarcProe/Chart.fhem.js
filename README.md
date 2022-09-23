@@ -104,10 +104,10 @@ ablegen
           "options": {
             "responsive": false,
             "scales": {
-              "yAxes": [{
+              "yAxis": [{
                 "id": "T", "scaleLabel": { "display": true, "labelString": "°C" }, "ticks": { "beginAtZero": false, "suggestedMin": 15, "suggestedMax": 25 }
               }],
-              "xAxes": [{ "type": "time", "time": { "unit": "hour" }, 
+              "xAxis": [{ "type": "time", "time": { "unit": "hour" }, 
                 "ticks": { 
                   "maxTicksLimit": 10,
                   "min": moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format(),

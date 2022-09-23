@@ -33,8 +33,12 @@ async function createChart(logrep, from, to, canvas, specs, chartUrl, callback) 
 
 function setTimePeriod(options, from, to, index) {
     if (!index) index = 0;
-    options.scales.xAxes[index].ticks.min = moment(from, "YYYY-MM-DD HH:mm:ss").format();
-    options.scales.xAxes[index].ticks.max = moment(to, "YYYY-MM-DD HH:mm:ss").format();
+    console.log(from.replace(" ","T"));
+    console.log(to);
+    console.log(moment(from, "YYYY-MM-DD HH:mm:ss").format());
+    console.log(moment(to, "YYYY-MM-DD HH:mm:ss").format());
+    options.scales.xAxis[index].ticks.min = moment(from, "YYYY-MM-DD HH:mm:ss").format();
+    options.scales.xAxis[index].ticks.max = moment(to, "YYYY-MM-DD HH:mm:ss").format();
 }
 
 
@@ -146,11 +150,11 @@ function getCSRF() {
 
 async function adjustTime(chart, time, tname, idx) {
     if (!idx) idx = 0;
-    const from = moment(chart.options.scales.xAxes[idx].ticks.min).add(time, tname);
-    const to = moment(chart.options.scales.xAxes[idx].ticks.max).add(time, tname);
+    const from = moment(chart.options.scales.xAxis[idx].ticks.min).add(time, tname);
+    const to = moment(chart.options.scales.xAxis[idx].ticks.max).add(time, tname);
 
-    chart.options.scales.xAxes[idx].ticks.min = from.format();
-    chart.options.scales.xAxes[idx].ticks.max = to.format();
+    chart.options.scales.xAxis[idx].ticks.min = from.format();
+    chart.options.scales.xAxis[idx].ticks.max = to.format();
 
     await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
 
@@ -162,8 +166,8 @@ async function gotoTime(chart, f, t, idx) {
     const from = moment(f, "YYYY-MM-DD HH:mm:ss");
     const to = moment(t, "YYYY-MM-DD HH:mm:ss");
 
-    chart.options.scales.xAxes[idx].ticks.min = from.format();
-    chart.options.scales.xAxes[idx].ticks.max = to.format();
+    chart.options.scales.xAxis[idx].ticks.min = from.format();
+    chart.options.scales.xAxis[idx].ticks.max = to.format();
 
     await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
 
