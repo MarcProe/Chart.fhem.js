@@ -1,13 +1,59 @@
-async function createChart(logrep, from, to, canvas, specs, chartUrl, callback) {
-    //load chart
-    const chartJSON = await loadChartFromUrl(chartUrl).catch(err => {
-        console.log(err)
-    });
+async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON, callback) {
+    //defaults
 
-    //set start and end time for axis
-    setTimePeriod(chartJSON.options, from, to);
+    if(!from) from = getChartTime(0,25);
+    if(!to) to = getChartTime();
+    if(!logrep) logrep = "logrep";
 
-    //register callback
+    const isof = toISO(from);
+    const isot = toISO(to);
+
+    if(!chartJSON) {
+        console.log("no chartjson");
+        chartJSON = {
+            type: "line",
+            options: {
+                responsive: "false",
+                animation: {},
+                scales: {
+                    x: {
+                        type: "time",
+                        time: {
+                            unit: "hour"
+                        },
+                        maxTicksLimit: 10,
+                        adapters: {
+                            date: {
+                                locale: "de"
+                            }
+                        },
+                        min: isof,
+                        max: isot
+                    },
+                }
+            }
+        }
+    }
+
+    if(axes) {
+        Object.entries(axes).forEach((e) => {
+            const k = e[0];
+            const v = e[1];
+            chartJSON.options.scales[k] = {
+                "position": (v.p ? v.p : "right"),
+                "title": {
+                    "display": (v.l ? true : false),
+                    "text": v.l
+                },
+                "beginAtZero": "false",
+                "suggestedMin": v.smin,
+                "suggestedMax": v.smax,
+                "min": v.min,
+                "max": v.max
+            }
+        });
+    }
+
     if (!chartJSON.options.animation) chartJSON.options.animation = {};
     chartJSON.options.animation.onComplete = callback;
 
@@ -17,7 +63,7 @@ async function createChart(logrep, from, to, canvas, specs, chartUrl, callback) 
         "to": to,
         "canvas": canvas,
         "specs": specs,
-        "chartUrl": chartUrl,
+        "chartJSON": chartJSON,
         "callback": callback
     };
 
@@ -29,47 +75,56 @@ async function createChart(logrep, from, to, canvas, specs, chartUrl, callback) 
     if (!window.fhemChartjs) window.fhemChartjs = {};
 
     window.fhemChartjs[canvas] = new Chart(ctx, chartJSON);
+
+    gotoTime(window.fhemChartjs[canvas], from, to)
 }
 
-function setTimePeriod(options, from, to, index) {
-    if (!index) index = 0;
-    console.log(from.replace(" ","T"));
-    console.log(to);
-    console.log(moment(from, "YYYY-MM-DD HH:mm:ss").format());
-    console.log(moment(to, "YYYY-MM-DD HH:mm:ss").format());
-    options.scales.xAxis[index].ticks.min = moment(from, "YYYY-MM-DD HH:mm:ss").format();
-    options.scales.xAxis[index].ticks.max = moment(to, "YYYY-MM-DD HH:mm:ss").format();
-}
-
-
-function createChartAsync(logrep, from, to, canvas, specs, chartUrl, callback, wait) {
+function createChartJSONAsync(logrep, from, to, canvas, specs, axes, chart, callback, wait) {
     setTimeout(function () {
-        createChart(logrep, from, to, canvas, specs, chartUrl, callback)
+        createChartJSON(logrep, from, to, canvas, specs, axes, chart, callback)
     }, wait ? wait : 0);
 }
 
+function createChart(canvas, specs, axes, from, to, logrep, wait, callback) {
+    createChartJSONAsync(logrep, from, to, canvas, specs, axes, null, callback, wait);
+}
+
 async function reloadData(chart, from, to) {
-    await loadAllData(chart.config.fhem.logrep, chart.config.fhem.specs, from, to, chart.data);
+    await loadAllData(chart.config._config.fhem.logrep, chart.config._config.fhem.specs, from, to, chart.data);
 }
 
 async function loadAllData(logrep, specs, from, to, data) {
+    if(!data) data = {};
+    if(!data.datasets) data.datasets = [];
     for (let i = 0; i < specs.length; i++) {
         const spec = specs[i];
         const d = await loadData(logrep, spec, from, to).catch(err => {
             console.log(err)
         });
+
+        if(!data.datasets[i]) data.datasets.push({});
         if (d) {
             data.datasets[i].data = d;
         }
-        if(spec.l) {
+        if (spec.a) {
+            data.datasets[i].yAxisID = spec.a;
+        }
+        if (spec.l) {
             data.datasets[i].label = spec.l;
+        } else {
+            data.datasets[i].label = spec.d + " " + spec.r;
+        }
+        if(spec.c) {
+            data.datasets[i].borderColor = spec.c;
+        } else {
+            data.datasets[i].borderColor = c(i);
         }
     }
 }
 
 function loadChartFromUrl(chartUrl) {
     return new Promise(function (resolve, reject) {
-        fetch(chartUrl, {"redirect": "error"}).then(response => {
+        fetch(chartUrl, { "redirect": "error" }).then(response => {
             return response.json();
         }).then(data => {
             resolve(data);
@@ -86,7 +141,7 @@ function loadData(logrep, spec, from, to) {
         const csrws = getCSRF();
         const csrf = csrws ? ("&fwcsrf=" + csrws) : "";
 
-        fetch('/fhem?cmd=' + cmd + csrf, {"redirect": "error"}).then(response => {
+        fetch('/fhem?cmd=' + cmd + csrf, { "redirect": "error" }).then(response => {
             return response.text();
         }).then(data => {
             const parser = new DOMParser();
@@ -110,7 +165,8 @@ function loadData(logrep, spec, from, to) {
                     } else {
                         y = e[1];
                     }
-                    ret.push({"x": moment(e[0], "YYYY-MM-DD HH:mm:ss").format(), "y": y});
+
+                    ret.push([ toISO(e[0]), y ]);
                 });
             } else {
                 ret = null;
@@ -137,8 +193,9 @@ function getChartTime(M, H, d, m, y) {
     if (m) today.setMonth(today.getMonth() - m);
     if (y) today.setFullYear(today.getFullYear() - y);
 
-    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // TODO this is crap.
+    const date = today.getFullYear() + '-' + ("0" + (today.getMonth() + 1)).slice(-2) + '-' + ("0" + today.getDate()).slice(-2);
+    const time = ("0" + today.getHours()).slice(-2) + ":" + ("0" + today.getMinutes()).slice(-2) + ":" + ("0" + today.getSeconds()).slice(-2);
     const ret = date + ' ' + time;
 
     return ret;
@@ -148,28 +205,41 @@ function getCSRF() {
     return document.body.getAttribute("fwcsrf");
 }
 
-async function adjustTime(chart, time, tname, idx) {
-    if (!idx) idx = 0;
-    const from = moment(chart.options.scales.xAxis[idx].ticks.min).add(time, tname);
-    const to = moment(chart.options.scales.xAxis[idx].ticks.max).add(time, tname);
+async function adjustTime(chart, time) {
+    const s = chart.options.scales["x"]
+    gotoTime(chart, adjust(s.min, time), adjust(s.max, time));
+}
 
-    chart.options.scales.xAxis[idx].ticks.min = from.format();
-    chart.options.scales.xAxis[idx].ticks.max = to.format();
+async function gotoTime(chart, from, to) {
+    chart.options.scales["x"].min = toISO(from);
+    chart.options.scales["x"].max = toISO(to);
 
-    await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
-
+    await reloadData(chart, from, to);
     chart.update();
 }
 
-async function gotoTime(chart, f, t, idx) {
-    if (!idx) idx = 0;
-    const from = moment(f, "YYYY-MM-DD HH:mm:ss");
-    const to = moment(t, "YYYY-MM-DD HH:mm:ss");
+function toISO(date) {
+    const ret = luxon.DateTime.fromFormat(date, "yyyy-LL-dd HH:mm:ss");
+    return ret.toISO();
+}
 
-    chart.options.scales.xAxis[idx].ticks.min = from.format();
-    chart.options.scales.xAxis[idx].ticks.max = to.format();
+function adjust(dt, time) {
+    var ret = luxon.DateTime.fromISO(dt);
+    ret = ret.plus(time);
+    ret = ret.toFormat("yyyy-LL-dd HH:mm:ss");
+    return ret;
+}
 
-    await reloadData(chart, from.format("YYYY-MM-DD HH:mm:ss"), to.format("YYYY-MM-DD HH:mm:ss"));
-
-    chart.update();
+function c(i) {
+    const col = [];
+    col.push("rgb(255,64,64)");
+    col.push("rgb(64,255,64)");
+    col.push("rgb(64,64,255)");
+    col.push("rgb(255,255,64)");
+    col.push("rgb(255,64,255)");
+    col.push("rgb(64,255,255)");
+    const r = (i % 8) * 32 - 1;
+    const g = (i % 4) * 64 - 1;
+    const b = 0;
+    return i < 6 ? col[i] : "rgb(" + r + "," + g + "," + b + ")";
 }
