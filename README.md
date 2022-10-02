@@ -80,34 +80,34 @@ ablegen
             "datasets": [{
               "label": "Temp Feinstaub",
               "data": data0,
-              "yAxisID": "T", "backgroundColor": ["rgba(255, 0, 0, 0.2)"], "borderColor": ["rgba(255, 16, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              "yAxesID": "T", "backgroundColor": ["rgba(255, 0, 0, 0.2)"], "borderColor": ["rgba(255, 16, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
             },{
                 "label": "Temp OWM",
                 "data": data1,
-              "yAxisID": "T", "backgroundColor": ["rgba(0, 255, 0, 0.2)"], "borderColor": ["rgba(16, 255, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              "yAxesID": "T", "backgroundColor": ["rgba(0, 255, 0, 0.2)"], "borderColor": ["rgba(16, 255, 16, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
               },{
                 "label": "Temp Hütte",
                 "data": data2,
-              "yAxisID": "T", "backgroundColor": ["rgba(0, 0, 255, 0.2)"], "borderColor": ["rgba(16, 16, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+              "yAxesID": "T", "backgroundColor": ["rgba(0, 0, 255, 0.2)"], "borderColor": ["rgba(16, 16, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false
               },
               {
                 "label": "Temp Außen",
                 "data": data3,
-                "yAxisID": "T", "backgroundColor": ["rgba(255, 255, 0, 0.2)"], "borderColor": ["rgba(255, 255, 16, 200)"], "borderWidth": 2, "pointRadius": 1, "fill": false
+                "yAxesID": "T", "backgroundColor": ["rgba(255, 255, 0, 0.2)"], "borderColor": ["rgba(255, 255, 16, 200)"], "borderWidth": 2, "pointRadius": 1, "fill": false
               },
               {
                 "label": "Temp Stall",
                 "data": data4,
-                "yAxisID": "T", "backgroundColor": ["rgba(0, 255, 255, 0.2)"], "borderColor": ["rgba(16, 255, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false,
+                "yAxesID": "T", "backgroundColor": ["rgba(0, 255, 255, 0.2)"], "borderColor": ["rgba(16, 255, 255, 1)"], "borderWidth": 2, "pointRadius": 1, "fill": false,
               }]
           },
           "options": {
             "responsive": false,
             "scales": {
-              "yAxis": [{
+              "yAxes": [{
                 "id": "T", "scaleLabel": { "display": true, "labelString": "°C" }, "ticks": { "beginAtZero": false, "suggestedMin": 15, "suggestedMax": 25 }
               }],
-              "xAxis": [{ "type": "time", "time": { "unit": "hour" }, 
+              "xAxes": [{ "type": "time", "time": { "unit": "hour" }, 
                 "ticks": { 
                   "maxTicksLimit": 10,
                   "min": moment(getChartTime(0,25), "YYYY-MM-DD HH:mm:ss").format(),
