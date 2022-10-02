@@ -137,7 +137,7 @@ function loadChartFromUrl(chartUrl) {
 function loadData(logrep, spec, from, to) {
     return new Promise(function (resolve, reject) {
         const sql = "SELECT DISTINCT timestamp, max(value) as value FROM history WHERE device = '" + spec.d + "' AND reading = '" + spec.r + "' AND timestamp between '" + from + "' AND '" + to + "' GROUP BY timestamp ORDER BY timestamp;";
-        const cmd = encodeURI("get " + logrep + " dbValue " + sql);
+        const cmd = encodeURI("get " + logrep + " sqlCmdBlocking " + sql);
         const csrws = getCSRF();
         const csrf = csrws ? ("&fwcsrf=" + csrws) : "";
 
