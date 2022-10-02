@@ -1,2 +1,14 @@
-6123d56 - Marcus Proest, Sun Nov 17 22:40:32 2019 +0100 : add function to create navigation buttons
+e88e543 - Marcus Proest, Sun Oct 2 10:11:02 2022 +0200 : rename
+b0e0bba - Marcus Proest, Sun Oct 2 10:10:26 2022 +0200 : major rework for chartjs 3 and luxon
+12cc000 - Marcus Proest, Fri Sep 23 22:39:17 2022 +0200 : typos
+565df96 - Marcus Proest, Fri Sep 23 22:37:55 2022 +0200 : cleanup
+d9d3115 - Marcus Proest, Fri Sep 23 22:36:42 2022 +0200 : update to chart.js 3.9.1
+d0d7a4e - Marcus, Thu Sep 15 13:14:18 2022 +0200 : Update controls_chart.txt
+57cb0ea - Marcus, Thu Sep 15 13:13:51 2022 +0200 : Update controls_chart.txt
+2fd7e20 - Marcus, Sun Sep 11 09:52:29 2022 +0200 : Update README.md
+7f2bfe2 - Marcus, Mon Feb 22 22:11:20 2021 +0100 : Create codeql-analysis.yml
+bda0692 - Marcus, Mon Nov 25 19:57:27 2019 +0100 : Merge pull request #2 from MarcProe/work
+b24aa83 - Marcus Proest, Mon Nov 25 19:56:20 2019 +0100 : update manual example
+9368fca - Marcus, Sun Nov 17 22:42:31 2019 +0100 : Merge pull request #1 from MarcProe/work
+3e3d8ff - Marcus Proest, Sun Nov 17 22:40:32 2019 +0100 : add function to create navigation buttons
 a4a70ea - Marcus Proest, Wed Nov 13 20:04:56 2019 +0000 : Initial commit

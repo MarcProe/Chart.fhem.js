@@ -1,7 +1,5 @@
 DIR www/chart.js
-UPD 2022-09-13_00:00:00 5769    www/chart.js/Chart.fhem.js
-UPD 2019-11-17_21:24:35 172817  www/chart.js/Chart.min.js
-UPD 2019-11-17_21:24:35 2336    www/chart.js/HeizungDefault.json
-UPD 2019-11-17_21:24:35 2666    www/chart.js/HeizungZweiFenster.json
-UPD 2019-11-17_21:24:35 336451  www/chart.js/moment-with-locales.min.js
-UPD 2019-11-17_21:24:35 521     www/pgm2/Chart.min.css
+UPD 2022-10-02_10:11:02 7713    www/chart.js/chart.fhem.js
+UPD 2022-10-02_10:10:26 199560  www/chart.js/chart.min.js
+UPD 2022-10-02_10:10:26 1836    www/chart.js/chartjs-adapter-luxon.min.js
+UPD 2022-10-02_10:10:26 71247   www/chart.js/luxon.min.js

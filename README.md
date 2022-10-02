@@ -60,7 +60,6 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
 
    </script>
    ```
-
 6. Fertig!
 
 7. Mit Javascript können auch Steuerknöpfe erzeugt werden:
