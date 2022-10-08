@@ -36,7 +36,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
       * `"min"`: Minimalwert auf der Achse
       * `"max"`: Maximalwert auf der Achse
       * `"smin"`: [Vorgeschlagener Minimalwert der Achse](https://www.chartjs.org/docs/latest/samples/scales/linear-min-max-suggested.html)
-      * `"smax"`: Vorgeschlagener Maxmimalwert der Achse
+      * `"smax"`: Vorgeschlagener Maximalwert der Achse
       
    
     ```html
