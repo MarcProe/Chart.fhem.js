@@ -9,11 +9,11 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
     const isot = toISO(to);
 
     if(!chartJSON) {
-        console.log("no chartjson");
-        chartJSON = {
+            chartJSON = {
             type: "line",
             options: {
-                responsive: "false",
+                responsive: true,
+                maintainAspectRatio: false,
                 animation: {},
                 scales: {
                     x: {
@@ -51,6 +51,14 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
                 "min": v.min,
                 "max": v.max
             }
+
+            if(v.o) {
+                Object.entries(v.o).forEach((f) => {
+                    ok = f[0];
+                    ov = f[1];
+                    chartJSON.options.scales[k][ok] = ov;
+                });
+            }
         });
     }
 
@@ -70,7 +78,7 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
     await loadAllData(logrep, specs, from, to, chartJSON.data).catch(err => {
         console.log(err)
     });
-    const ctx = document.getElementById(canvas).getContext('2d');
+    const ctx = document.getElementById(canvas);
 
     if (!window.fhemChartjs) window.fhemChartjs = {};
 
