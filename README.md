@@ -41,7 +41,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
    
     ```html
    htmlCode <div>
-       <canvas id="HeizungBad" width="800" height="300"></canvas>
+       <canvas id="HeizungBad"></canvas>
    </div>
    <script>
    createChart( "HeizungBad", 
@@ -62,11 +62,24 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
    ```
 6. Fertig!
 
-7. Mit Javascript können auch Steuerknöpfe erzeugt werden:
+7. Mit Javascript können auch Steuerknöpfe erzeugt werden, zudem kann die Breite des Charts angegeben werden, und ein Link auf die Chartdefinition erezeeugt werden:
     ```html
-    <canvas id="HeizungBad" width="800" height="300"></canvas>
-    <button type="button" onClick="adjustTime(fhemChartjs['HeizungBad'], {'hours': '-12'})">&larr;</button>
-    <button type="button" onClick="gotoTime(fhemChartjs['HeizungBad'], getChartTime(0,25), getChartTime())">Jetzt</button>
-    <button type="button" onClick="adjustTime(fhemChartjs['HeizungBad'], {'hours': '12'});">&rarr;</button>
-    <!-- ... -->
+   htmlCode 
+   <div>
+      <!-- Link auf die Definition -->
+      <a href="/fhem?detail=chart_Heizung_Bad">Bad</a>
+      <div class="chart-container" style="style=width:100%;max-width:700px">
+        <!-- Chart Canvas -->
+        <canvas id="HeizungBad"></canvas>
+      </div>
+      <!-- 12 Stunden zurück -->
+      <button type="button" onClick="adjustTime(fhemChartjs['HeizungBad'], {'hours': '-12'})">&larr;</button>
+      <!-- 25 Stunden zurück bis jetzt -->
+      <button type="button" onClick="gotoTime(fhemChartjs['HeizungBad'], getChartTime(0,25), getChartTime())">Jetzt</button>
+      <!-- 12 Stunden vor -->
+      <button type="button" onClick="adjustTime(fhemChartjs['HeizungBad'], {'hours': '12'});">&rarr;</button>
+    </div>
+    <script>
+      /* */
+    </script>
     ```
