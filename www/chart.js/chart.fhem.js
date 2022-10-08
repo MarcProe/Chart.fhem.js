@@ -44,12 +44,22 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
                 "title": {
                     "display": (v.l ? true : false),
                     "text": v.l
-                },
-                "beginAtZero": "false",
-                "suggestedMin": v.smin,
-                "suggestedMax": v.smax,
-                "min": v.min,
-                "max": v.max
+                }
+            }
+
+            if(v.min) {
+                chartJSON.options.scales[k].min = v.min;
+            }
+            if(v.max) {
+                chartJSON.options.scales[k].max = v.max;
+            }
+
+            if(v.smin) {
+                chartJSON.options.scales[k].suggestedMin = v.smin;
+            }
+
+            if(v.smax) {
+                chartJSON.options.scales[k].suggestedMax = v.smax;
             }
 
             if(v.o) {
@@ -63,7 +73,9 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
     }
 
     if (!chartJSON.options.animation) chartJSON.options.animation = {};
-    chartJSON.options.animation.onComplete = callback;
+    if(callback) {
+        chartJSON.options.animation.onComplete = callback;
+    }
 
     chartJSON.fhem = {
         "logrep": logrep,
@@ -85,6 +97,8 @@ async function createChartJSON(logrep, from, to, canvas, specs, axes, chartJSON,
     window.fhemChartjs[canvas] = new Chart(ctx, chartJSON);
 
     gotoTime(window.fhemChartjs[canvas], from, to)
+
+    console.log(chartJSON);
 }
 
 function createChartJSONAsync(logrep, from, to, canvas, specs, axes, chart, callback, wait) {

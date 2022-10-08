@@ -1,9 +1,14 @@
-5ce7a5d - Marcus Proest, Sun Oct 2 11:38:08 2022 +0200 : update controls CHANGED
-e88e543 - Marcus Proest, Sun Oct 2 10:11:02 2022 +0200 : rename
-b0e0bba - Marcus Proest, Sun Oct 2 10:10:26 2022 +0200 : major rework for chartjs 3 and luxon
-12cc000 - Marcus Proest, Fri Sep 23 22:39:17 2022 +0200 : typos
-565df96 - Marcus Proest, Fri Sep 23 22:37:55 2022 +0200 : cleanup
-d9d3115 - Marcus Proest, Fri Sep 23 22:36:42 2022 +0200 : update to chart.js 3.9.1
+afe2175 - Marcus Proest, Sat Oct 8 20:13:24 2022 +0200 : add common axes options
+64251fe - Marcus, Sat Oct 8 20:11:36 2022 +0200 : Update README.md
+2ccbb94 - Marcus, Sat Oct 8 20:10:53 2022 +0200 : Update README.md
+9f7d321 - Marcus, Sat Oct 8 20:10:25 2022 +0200 : Update README.md
+bf7fb70 - Marcus, Sat Oct 8 18:34:08 2022 +0200 : Update README.md
+f5e3c1b - Marcus, Sat Oct 8 16:40:35 2022 +0200 : typo
+c039629 - Marcus, Sat Oct 8 13:53:49 2022 +0200 : Update README.md
+c1d2714 - Marcus, Sat Oct 8 13:46:16 2022 +0200 : update readme
+5ec5473 - Marcus, Sun Oct 2 12:16:00 2022 +0200 : Update (#6)
+c853e11 - Marcus, Sun Oct 2 11:40:57 2022 +0200 : Update (#3)
+eaa1c46 - Marcus, Sun Oct 2 11:33:27 2022 +0200 : Update README.md
 d0d7a4e - Marcus, Thu Sep 15 13:14:18 2022 +0200 : Update controls_chart.txt
 57cb0ea - Marcus, Thu Sep 15 13:13:51 2022 +0200 : Update controls_chart.txt
 2fd7e20 - Marcus, Sun Sep 11 09:52:29 2022 +0200 : Update README.md
