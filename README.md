@@ -37,6 +37,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
       * `"max"`: Maximalwert auf der Achse
       * `"smin"`: [Vorgeschlagener Minimalwert der Achse](https://www.chartjs.org/docs/latest/samples/scales/linear-min-max-suggested.html)
       * `"smax"`: Vorgeschlagener Maximalwert der Achse
+      * `"o"`: Alle anderen Optionen aus der (Dokumentation von Chart.js)[https://www.chartjs.org/docs/latest/axes/]
       
    
     ```html
@@ -52,7 +53,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
                     { "d": "HumiBad", "r": "humidity", "a": "A", "l": "Feuchtigkeit", "c": "rgb(64,64,192)" }
                   ],
                   {
-                      "T": { "p": "left", "l": "°C", "smin": "15", "smax": "25" },
+                      "T": { "p": "left", "l": "°C", "smin": "15", "smax": "25", "o": {"grid": {"color": "rgb(255,64,64)"} } },
                       "L": { "l": "on/off", "min": "0", "max": "1" },
                       "A": { "l": "pct", "smin": "40", "smax": "80" }
                   }                  
