@@ -64,7 +64,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
    ```
 6. Fertig!
 
-7. Mit Javascript können auch Steuerknöpfe erzeugt werden, zudem kann die Breite des Charts angegeben werden, und ein Link auf die Chartdefinition erezeeugt werden:
+7. Mit Javascript können auch Steuerknöpfe erzeugt werden, zudem kann die Höhe und Breite des Charts angegeben werden, und ein Link auf die Chartdefinition erzeugt werden:
     ```html
    htmlCode 
    <div>
