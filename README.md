@@ -85,3 +85,4 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
       /* */
     </script>
     ```
+![image](https://user-images.githubusercontent.com/11455452/194722741-d07ebf35-bac4-4507-95be-c8f8dbfde43c.png)
