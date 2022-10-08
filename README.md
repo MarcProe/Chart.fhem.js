@@ -68,7 +68,7 @@ Forum: https://forum.fhem.de/index.php/topic,105341.0.html
    <div>
       <!-- Link auf die Definition -->
       <a href="/fhem?detail=chart_Heizung_Bad">Bad</a>
-      <div class="chart-container" style="style=width:100%;max-width:700px">
+      <div class="chart-container" style="style=width:100%;max-width:700px;height:400px;">
         <!-- Chart Canvas -->
         <canvas id="HeizungBad"></canvas>
       </div>
